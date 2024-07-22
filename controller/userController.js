@@ -64,15 +64,17 @@ exports.loginUser = async (req, res, next) => {
 //logout user
 exports.logout = async (req, res, next) => {
     try {
-        res.cookie("token", null, {
-            expires: new Date(Date.now()),
-            httpOnly: true
-        })
+        res.clearCookie("token")
+        // res.cookie("token", null, {
+        //     expires: new Date(Date.now()),
+        //     httpOnly: true
+        // })
         res.status(200).json({
             success: true,
             msg: "loged out successful"
         })
     } catch (error) {
+        console.log(error)
         res.status(400).json({ error: error.message })
 
     }
@@ -145,7 +147,7 @@ exports.resetPassword = async (req, res, next) => {
 // getUserDetails (own's detail)
 exports.getUserDetails = async (req, res, next) => {
     try {
-        const user = await User.findById(req.user.id)
+        const user = await User.findById(req.user._id)
         res.status(200).json({
             success: true,
             user
@@ -205,7 +207,8 @@ exports.updateProfile = async (req, res, next) => {
         })
         
     } catch (error) {
-        res.status(400).json({error:error.message})
+        console.log(error );
+        res.status(400).json({ success:false,error:error.message})
     }
 
 }

@@ -15,5 +15,5 @@ router.get("/admin/user/:id",isAuthenticateUser,isAuthorizedRole("admin"),getSin
 router.put("/admin/user/:id",isAuthenticateUser,isAuthorizedRole("admin"),UpdateUserRole)
 router.delete("/admin/user/:id",isAuthenticateUser,isAuthorizedRole("admin"),deleteUser)
 
-router.get("/logout",logout)
+router.get("/logout",isAuthenticateUser,logout)
 module.exports=router;
